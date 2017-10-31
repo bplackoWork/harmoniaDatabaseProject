@@ -1,0 +1,53 @@
+body{
+	background: blue;
+}
+#form{
+	border: solid gray 1px;
+	width: 20%;
+	border-radius: 5px;
+	margin: 100px auto;
+	padding: 10px;
+	background: white;
+}
+#button {
+	color: white;
+	background: #06294B;
+	padding: 5px;
+	margin-left: 69&;
+}
+#DHS{
+	color: black;
+	text-align: center;
+	font-size: 40px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#cbp{
+	color: black;
+	text-align: center;
+	font-size: 30px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#seal{
+	/*background: url("seal.png");	*/
+	float: inherit;
+	padding: 4px;
+	width:200px;
+	height:200px;
+	
+}
+.banner{
+	width:100%;
+	height:10px;
+}
+#forms{
+	color: black;
+	text-align: center;
+	font-size: 25px;
+	font-family: Georgia, Times, Times New Roman, serif;
+	text-decoration: underline;
+}
+
+
+
+
+

@@ -1,0 +1,7 @@
+1. Reports - how many forms of each type 
+2. OMB Expirationn - search by year or month year
+3. Report number of by distro type
+4. Report total number of abolished
+5. Number of forms by Office ownership
+6. Breakdown by percentage to be used in charts
+7. Query upcoming form refresh dates (add new column for next_refresh_date) - in GUI when inputting last refresh date have uneditable input box that shows the new refresh date 3 years out to be inserted in new update column
