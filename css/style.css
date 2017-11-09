@@ -46,8 +46,14 @@ body{
 	font-family: Georgia, Times, Times New Roman, serif;
 	text-decoration: underline;
 }
-
-
-
-
-
+.table_control_margin{
+	margin-bottom: 10px;
+}
+div>h3{
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+div>h4{
+	text-align: center;
+	margin-top: 0px;
+}

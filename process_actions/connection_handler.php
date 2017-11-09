@@ -26,7 +26,7 @@ if ($conn->connect_error)
 	die("Connection failed: ". $conn->connect_error);
 }
 
-$db_return = json_encode($db_obj);
-echo $db_return;;
+echo json_encode($aaData);
+//echo $data;;
 
 ?>

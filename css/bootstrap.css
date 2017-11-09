@@ -6591,7 +6591,7 @@ button.close {
   clear: both;
 }
 .center-block {
-  display: block;
+  display: table;
   margin-right: auto;
   margin-left: auto;
 }

@@ -1,9 +1,82 @@
-function buildTable(table_get_data)
-{
-	var table = $('#forms_db_table').DataTable( {
-	    data: table_get_data,
-	    columns: [
-	        { data: 'form_number' },
+function buildPageBody(task_clicked){
+	var task_route = {
+		'forms_lookup': function(){
+			return renderRetrieve();
+		},
+		'form_entry': function(){
+			return renderRetrieve();
+		},
+		'default': function(){
+			return renderRetrieve();
+		}
+	};
+
+	if(task_clicked == "default")
+	{
+		task_clicked = "forms_lookup";
+	}
+
+	$.ajax({
+  		url: "../pages/"+task_clicked+".php",
+  		cache: false
+	})
+  	.done(function( html ) {
+    	$( "#page_body" ).empty().append( html );
+    	task_route[task_clicked]();
+  	});
+}
+
+function formInsertData(db_data_obj){
+	$.ajax({
+		url: "../process_actions/db_insert_data.php",
+		type: "POST",
+		data: db_data_obj.serializeArray(),
+		success: function(data){
+			alert("YAY!");
+		}
+	});
+}
+
+function futureDate(){
+	var date_val = $('#last_refresh_date').val();
+	
+	let f_date = new Date(date_val.replace(/-/g, '\/'));
+
+	var curr_date = ''+f_date.getDate();
+	var curr_month = ''+f_date.getMonth();
+	curr_month++;
+
+	if(curr_month.length < 2)
+	{
+		curr_month = '0'+curr_month;
+	}
+	if(curr_date.length < 2)
+	{
+		curr_date = '0'+curr_date;
+	}
+
+	var curr_year = f_date.getFullYear();
+	curr_year = curr_year + 3
+	
+	var future_date_val = curr_year +"-" + curr_month + "-" + curr_date;
+	
+	$('#next_refresh_date').val(future_date_val);
+}
+
+function renderRetrieve(){
+	var data = {};
+	data.controller_task = "retrieve_data";
+
+	var table = $('#forms_db_table').DataTable({
+		"processing": true,
+		"serverside": true,
+		"ajax": {
+			"url": "../process_actions/connection_handler.php",
+			"type": "POST",
+			"data": data
+		},
+		"columns": [
+			{ data: 'form_number' },
 	        { data: 'form_title' },
 	        { data: 'abolished' },
 	        { data: 'serialized' },
@@ -19,7 +92,7 @@ function buildTable(table_get_data)
 	        "defaultContent": "" },
 	        { data: 'omb_expiration_date',
 	        "defaultContent": "" }
-	    ],
+		],
 	    "columnDefs": [
 	    	{
 	    		"targets": [2],
@@ -62,7 +135,7 @@ function buildTable(table_get_data)
 	    		"searchable": false
 	    	}
 	    ]
-	} );
+	});
 
 	$('a.toggle-vis').on( 'click', function (e) {
         e.preventDefault();
@@ -76,20 +149,17 @@ function buildTable(table_get_data)
 }
 
 $( document ).ready(function() {
-    var query_data = {};
-	query_data.controller_task = "retrieve_data";
+	buildPageBody('default');
+});
 
+$(document).ajaxComplete(function(){
+	$('#last_refresh_date').change(function(){
+		futureDate();
+	});
 
-	$.ajax({
-	  method: "POST",
-	  url: "../process_actions/connection_handler.php",
-	  data: query_data,
-	  dataType: "json",
-	  success: function(data){
-	  		query_return = data;
-	  		//alert(query_return[0].form_number);
-	  		buildTable(query_return);
-	  	}
-	  });
-	
+	$('#form_info_submit').on('submit', function(e){
+		e.preventDefault();
+		var form_info_submit = $('#form_info_submit');
+		formInsertData(form_info_submit);
+	});
 });
