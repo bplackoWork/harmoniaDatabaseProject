@@ -12,7 +12,7 @@ $columns = array(
 	array( 'db' => 'poc_email', 'dt' => 9 ),
 	array( 'db' => 'poc_secondary_email', 'dt' => 10 ),
 	array( 'db' => 'omb_control_number', 'dt' => 11 ),
-	array( 'db' => 'omb_expiration_date', 'dt' => 12 )
+	array( 'db' => 'omb_exp_date', 'dt' => 12 )
 );
 
 //processing code for retrieving data
@@ -26,16 +26,20 @@ if ($get_form_data_result->num_rows > 0)
 	{
 		$get_forms_results[] = $get_form_data_result_row;
 	}
+
+	$result_count = $get_form_data_result->num_rows;
 }
 else
 {
-	//echo "0 results";
-}
+	//$get_forms_results = "No Records";
 
+	unset($columns);
+}
+$testdraw = $_REQUEST['draw'];
 $output = array(
 	"draw" => intval( $_REQUEST['draw'] ),
-	"recordsTotal" => intval( $totaldata ),
-	"recordsFiltered" => intval( $totalfiltered ),
+	"recordsTotal" => intval( $result_count ),
+	"recordsFiltered" => intval( $testdraw ),
 	"data" => $get_forms_results,
 	"columns" => $columns
 );

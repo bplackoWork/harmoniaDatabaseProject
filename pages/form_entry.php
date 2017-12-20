@@ -4,14 +4,20 @@
 			<div class="col-md-12">
 				<div class="row">
 					<div class="col-md-12">
+						<label for="">Formal Form Number: </label>
+						<input type="text" class="required_input" name="formal_form_number">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
 						<label for="">Form Number: </label>
-						<input type="text" name="form_number">
+						<input type="text" class="required_input" name="form_number">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<label for="">Form Title:</label>
-						<input type="text" name="form_title">
+						<input type="text" class="required_input" name="form_title">
 					</div>
 				</div>
 				<div class="row">
@@ -33,7 +39,8 @@
 				<div class="row">
 					<div class="col-md-12">
 						<label for="">Usage Type:</label>
-						<select name="usage_type" id="usage_type">
+						<select name="usage_type" class="required_input" id="usage_type">
+							<option value="" disabled selected>Select Usage</option>
 							<option value="public">Public</option>
 							<option value="internal">Internal</option>
 						</select>
@@ -50,19 +57,20 @@
 				<div class="row">
 					<div class="col-md-12">
 						<label for="">Previous Refresh Date::</label>
-						<input type="date" id="last_refresh_date" name="last_refresh_date" value="">
+						<input type="date" id="last_refresh_date" class="required_input" name="last_refresh_date" value="">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<label for="">Next Refresh Date: </label>
-						<input type="date" id="next_refresh_date" name="next_refresh_date" value="" readonly>
+						<input type="date" id="next_refresh_date" class="required_input" name="next_refresh_date" value="" readonly>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<label for="">CBP Office of Control:</label>
-						<select name="cbp_control_office" id="cbp_control_office">
+						<select name="cbp_control_office" id="cbp_control_office" class="required_input">
+							<option value="" disabled selected>Select Office</option>
 							<option value="ofo">Office of the Commissioner</option>
 							<option value="internal">U.S. Border Patrol</option>
 							<option value="public">Air &amp; Marine Operations</option>
@@ -82,7 +90,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<label for="">Primary Contact Email:</label>
-						<input type="text" name="poc_email">
+						<input type="text" class="required_input" name="poc_email">
 					</div>
 				</div>
 				<div class="row">
@@ -100,9 +108,10 @@
 				<div class="row">
 					<div class="col-md-12">
 						<label for="">OMB Expiration Date:</label>
-						<input type="text" name="omb_exp_date">
+						<input type="date" name="omb_exp_date">
 					</div>
 				</div>
+				<input type="hidden" name="controller_task" value="insert_data">
 				<div class="row">
 					<div class="col-md-12">
 						<input type="submit" name="submit" id="submit_btn" value="Submit">

@@ -4,7 +4,7 @@ function buildPageBody(task_clicked){
 			return renderRetrieve();
 		},
 		'form_entry': function(){
-			return renderRetrieve();
+			return;
 		},
 		'default': function(){
 			return renderRetrieve();
@@ -28,7 +28,7 @@ function buildPageBody(task_clicked){
 
 function formInsertData(db_data_obj){
 	$.ajax({
-		url: "../process_actions/db_insert_data.php",
+		url: "../process_actions/connection_handler.php",
 		type: "POST",
 		data: db_data_obj.serializeArray(),
 		success: function(data){
@@ -70,9 +70,18 @@ function renderRetrieve(){
 	var table = $('#forms_db_table').DataTable({
 		"processing": true,
 		"serverside": true,
+		"language": {
+      		"zeroRecords": "No data available in table"
+    	},
 		"ajax": {
 			"url": "../process_actions/connection_handler.php",
 			"type": "POST",
+			"dataSrc": function(json){
+				if(!json.data){
+					json.data = [];
+				}
+				return json.data;
+			},
 			"data": data
 		},
 		"columns": [
@@ -90,49 +99,49 @@ function renderRetrieve(){
 	        "defaultContent": "" },
 	        { data: 'omb_control_number',
 	        "defaultContent": "" },
-	        { data: 'omb_expiration_date',
+	        { data: 'omb_exp_date',
 	        "defaultContent": "" }
 		],
 	    "columnDefs": [
 	    	{
 	    		"targets": [2],
 	    		"visible": false,
-	    		"searchable": false
+	    		"searchable": true
 	    	},
 	    	{
 	    		"targets": [3],
 	    		"visible": false,
-	    		"searchable": false
+	    		"searchable": true
 	    	},
 	    	{
 	    		"targets": [4],
 	    		"visible": false,
-	    		"searchable": false
+	    		"searchable": true
 	    	},
 	    	{
 	    		"targets": [5],
 	    		"visible": false,
-	    		"searchable": false
+	    		"searchable": true
 	    	},
 	    	{
 	    		"targets": [8],
 	    		"visible": false,
-	    		"searchable": false
+	    		"searchable": true
 	    	},
 	    	{
 	    		"targets": [10],
 	    		"visible": false,
-	    		"searchable": false
+	    		"searchable": true
 	    	},
 	    	{
 	    		"targets": [11],
 	    		"visible": false,
-	    		"searchable": false
+	    		"searchable": true
 	    	},
 	    	{
 	    		"targets": [12],
 	    		"visible": false,
-	    		"searchable": false
+	    		"searchable": true
 	    	}
 	    ]
 	});
@@ -148,6 +157,38 @@ function renderRetrieve(){
     } );
 }
 
+function requiredValueCheck(){
+
+	$('#form_info_submit').on('submit', function(e){
+		var failed = 0;
+		e.preventDefault();
+
+		$('.required_input').each(function(){
+			if($('.required_input').val() == "")
+			{
+				failed = 1;
+				$(this).css("background-color", "red", "display", "none");
+				$(this).fadeIn(5000);
+				//return;
+			}
+		});
+
+		if(failed == 0)
+		{
+			var form_info_submit = $('#form_info_submit');
+			formInsertData(form_info_submit);
+		}
+		else
+		{
+			alert('SHIT!');
+		}
+	});
+}
+
+function colorReset(){
+	
+}
+
 $( document ).ready(function() {
 	buildPageBody('default');
 });
@@ -157,9 +198,21 @@ $(document).ajaxComplete(function(){
 		futureDate();
 	});
 
-	$('#form_info_submit').on('submit', function(e){
-		e.preventDefault();
-		var form_info_submit = $('#form_info_submit');
-		formInsertData(form_info_submit);
+	$('.required_input').on({
+		focus: function(){
+			if($(this).css("background-color") == 'rgb(255, 0, 0')
+			{
+				$(this).css("background-color", "white");
+			}
+		},
+		blur: function(){
+			if($(this).css("background-color") == 'rgb(255, 0, 0')
+			{
+				$(this).css("background-color", "white");
+			}
+		}
 	});
+
+	requiredValueCheck();
+	//colorReset();
 });

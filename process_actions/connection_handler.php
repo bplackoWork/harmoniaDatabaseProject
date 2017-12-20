@@ -16,7 +16,8 @@ if($controller_task == 'retrieve_data')
 
 if($controller_task == 'insert_data')
 {
-
+	$conn = new mysqli($serverName, $userName, $password, $dbname);
+	include "db_insert_data.php";
 }
 
 
